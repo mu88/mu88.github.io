@@ -1,0 +1,24 @@
+baseURL = "http://mu88.github.io/"
+languageCode = "en-us"
+theme = "hugo-nuo"
+publishDir = "docs"
+enableRobotsTXT = true
+pygmentsuseclasses = true
+PygmentsCodeFences = true
+
+[[menu.main]]
+  name = "Home"
+  weight = 10
+  identifier = "home"
+  url = "/"
+
+# Add your own params here
+[params]
+  author = "mu88"
+  avatar = "http://www.gravatar.com/avatar/6761d97fe3d22fc7f3a5094f8ecfc787.jpg?s=512"
+  seotitle = "Hugo Blog (SEO Version)"
+  subtitle = "Programming Blog of mu88"
+  description = "A blog about all the things related to programming."
+  paginate = 10
+  email = "mu88_developer@outlook.com"
+  github = "mu88"
