@@ -5,6 +5,7 @@ description:         'A reserved <a href="http://jekyllrb.com" target="_blank">J
 url:                 https://github.com/mu88/mu88.github.io
 baseurl:             'https://mu88.github.io'
 paginate:            5
+stackoverflow:       https://stackoverflow.com/users/4919526/mu88
 
 # GitHub
 github:
