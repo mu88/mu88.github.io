@@ -6,6 +6,10 @@ url:                 https://github.com/mu88/mu88.github.io
 baseurl:             'https://mu88.github.io'
 paginate:            5
 
+# GitHub
+github:
+  repo:              https://github.com/mu88/mu88.github.io
+
 # About/contact
 author:
   name:              mu88
