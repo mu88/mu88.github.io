@@ -1,7 +1,7 @@
 # Setup
 title:               mu88
 tagline:             'Developer Blog'
-description:         'A reserved <a href="http://jekyllrb.com" target="_blank">Jekyll</a> theme that places the utmost gravity on content with a hidden drawer. Made by <a href="https://twitter.com/mdo" target="_blank">@mdo</a>.'
+description:         'Just another blog of just another software developer out there. Thanks to <a href="https://twitter.com/mdo" target="_blank">@mdo</a> for providing the amazing Jekyll theme!'
 url:                 https://github.com/mu88/mu88.github.io
 baseurl:             'https://mu88.github.io'
 paginate:            5
