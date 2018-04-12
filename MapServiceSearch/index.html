@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <title>Map Service Search</title>
+        <link rel="icon" href="assets/globus.png" />
+        
+        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="styles.css">
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+        <script src="https://cdn.rawgit.com/elastic/bower-elasticsearch-js/c8ef3151/elasticsearch.angular.min.js"></script>
+        <script src="script.js"></script>
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body ng-app="MapServiceSearchApp">
+        <div ng-controller="MapServiceSearchCtrl" class="container">
+            <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+            </nav>
+
+            <h1 class="display-1 text-center">Map Service Search</h1>
+            <h5 class="display-5 text-center">Search the metadata of all ArcGIS Servers</h5>
+
+            <div ng-if="error" class="alert alert-danger" role="alert">{{error.message}}</div>
+
+            <div ng-show="searchAvailable">
+                <form class="mx-2 my-auto d-inline w-100">
+                    <div class="input-group">
+                        <input type="text" ng-keyup="search()" ng-model="searchTerm" class="form-control text-center" placeholder="Enter your search here">
+                        <span class="input-group-btn">
+                            <i ng-click="showAdvancedOptions=!showAdvancedOptions" class="fa fa-cog fa-2x"></i>
+                        </span>
+                    </div>
+                </form>
+                <form>
+                    <div ng-show="showAdvancedOptions" class="form-row align-items-center">
+                        <div class="form-group col-md-4">
+                            <label for="selectEnvironment">Environment</label>
+                            <select ng-change="search()" ng-model="selectedServerEnvironment" ng-options="serverEnvironment for serverEnvironment in serverEnvironments" class="form-control" id="selectEnvironment"></select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="selectType">Type</label>
+                            <select ng-change="search()" ng-model="selectedServerType" ng-options="serverType for serverType in serverTypes" class="form-control" id="selectType"></select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <section class="row" ng-show="searchTerm.length>=3">
+                <div class="no-mapServices" ng-hide="mapServices.length">No results</div>
+                <article class="col-lg-4 col-md-6 mb-4" ng-click="toggleModal(mapService)" ng-repeat="mapService in mapServices" ng-cloak>
+                    <div class="card h-100" >
+                        <h3 class="card-header" style="background-color: #e3f2fd;">
+                            {{mapService.serviceName}}
+                        </h3>
+                        <div class="card-body text-secondary">
+                            <h4 class="card-title">{{mapService.serverName}}</h4>
+                            <p class="card-text">{{mapService.serverEnvironment}} - {{mapService.serverType}}</p>
+                        </div>
+                    </div>
+                </article>
+            </section>
+            
+            <div class="row justify-content-center" ng-hide="allResults">
+                <button type="button" ng-click="loadMore()" class="btn btn-primary">Load more results...</button>
+            </div>
+
+            <modal visible="showModal">
+                <article>
+                    <header>
+                        <h2>
+                            {{selectedMapService.serviceName}}
+                        </h2>
+                    </header>
+
+                    <table>
+                        <tr>
+                            <td>ArcGIS Server Name:</td>
+                            <td><em>{{selectedMapService.serverName}}</em></td>
+                        </tr>
+                        <tr>
+                            <td>ArcGIS Server Environment:</td>
+                            <td><em>{{selectedMapService.serverEnvironment}}</em></td>
+                        </tr>
+                        <tr>
+                            <td>ArcGIS Server Type:</td>
+                            <td><em>{{selectedMapService.serverType}}</em></td>
+                        </tr>
+                    </table>
+
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Source</th>
+                            <th>Authentication</th>
+                            <th>User</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-show="datasource.containsSearchTerm===true" ng-repeat="datasource in selectedMapService.datasources" class="highlightedRow">
+                            <td>{{ datasource.datasetName }}</td>
+                            <td>{{ datasource.datasourceType }}</td>
+                            <td>{{ datasource.datasource }}</td>
+                            <td>{{ datasource.datasourceAuthentication }}</td>
+                            <td>{{ datasource.datasourceUser }}</td>
+                        </tr>
+                        <tr ng-show="datasource.containsSearchTerm===false" ng-repeat="datasource in selectedMapService.datasources">
+                            <td>{{ datasource.datasetName }}</td>
+                            <td>{{ datasource.datasourceType }}</td>
+                            <td>{{ datasource.datasource }}</td>
+                            <td>{{ datasource.datasourceAuthentication }}</td>
+                            <td>{{ datasource.datasourceUser }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </article>
+            </modal>
+        </div>
+    </body>
+</html>
