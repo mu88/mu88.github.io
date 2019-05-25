@@ -17,7 +17,7 @@ For me as a Visual Studio loving C# developer, it is still odd to have three dif
 Of course, these are primarily prejudices. I have read too many articles not to know that it is much easier today. So I wanted to combine all the three steps into on environment, which is Visual Studio Code.
 
 I'll pass the first step, since it is not worth mentioning the I can write JavaScript code in VS Code :grin: Let's focus on the second step, which is building the application. According to the [Microsoft documentation](https://code.visualstudio.com/docs/editor/tasks), I've set up a `.vscode\tasks.json` with the following content:
-```
+```json
 {
     "version": "2.0.0",
     "tasks": [
@@ -36,7 +36,7 @@ I'll pass the first step, since it is not worth mentioning the I can write JavaS
 It creates a default build task called *Build HelloWorld* (which is my sample application) that simply calls the Python generator script.
 
 Lastly, there is the step of debugging my built application right from VS Code. Again, the [Microsoft documentation](https://code.visualstudio.com/Docs/editor/debugging) was very helpful. To debug an application, I had to set up the file `.vscode\launch.json` in the following way:
-```
+```json
 {
     "version": "0.2.0",
     "configurations": [
