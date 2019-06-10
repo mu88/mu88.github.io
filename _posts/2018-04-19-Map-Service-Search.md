@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Map Service Search
+description: Using FME, ArcGIS & AngularJS to index and search Map Services.
 comments: true
 ---
 

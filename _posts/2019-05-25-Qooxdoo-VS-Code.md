@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Build and debug Qooxdoo with Visual Studio Code
+description: How-to build and debug Qooxdoo with Visual Studio Code
 comments: true
 ---
 
