@@ -2,8 +2,8 @@
 title:               mu88
 tagline:             'Developer Blog'
 description:         'Just another blog of just another software developer out there. Thanks to <a href="https://twitter.com/mdo" target="_blank">@mdo</a> for providing the amazing Jekyll theme!'
-url:                 https://github.com/mu88/mu88.github.io
-baseurl:             'https://mu88.github.io'
+url:                 https://mu88.github.io
+baseurl:             ''
 paginate:            5
 
 # GitHub
@@ -30,4 +30,5 @@ comments:
 
 plugins:
   - jekyll-seo-tag
+  - jekyll-sitemap
   - jemoji
