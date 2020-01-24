@@ -14,30 +14,28 @@ But how to apply `i18n` and `l10n` to Blazor Server? At the time of porting my a
 
 Since Blazor Server is an ASP.NET Core application, I've written an injectable component called `CustomTranslator`:
 
-<script src="https://gist.github.com/mu88/00ea8e8b497bc0e18a8014f596a27910.js"></script>
+<script src="https://gist.github.com/mu88/585976478220b23b7db1e8e27753092a.js?file=CustomTranslator.cs"></script>
 
 As you can see, the interface `ICustomTranslator` accepts a string and returns the translation. The implementation `CustomTranslator` does a lookup in a property called `Localizer`. This component is a built-in functionality of ASP.NET Core ([see here](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/localization?view=aspnetcore-3.1)) and it comes from the Dependency Injection container.
 
 To use the custom translation service, it has to be registered within `Startup.cs`:
 
-<script src="https://gist.github.com/mu88/f8300a8567e7ff6b5a4e22bcf13ad9d2.js"></script>
+<script src="https://gist.github.com/mu88/585976478220b23b7db1e8e27753092a.js?file=Startup.cs"></script>
 
 Let's go through this step by step. Within `ConfigureServices()`, basic localization is enabled and we're telling ASP.NET Core to look for all translations in the resource folder `Resources`. Next, the custom translation component is registered within the Dependency Injection container as a singleton.  
 The array `supportedCultures` within `Configure()` defines all the languages the application will support. The following line configures the application to support the requested languages and defines that the default language of my application is German (`de`).
 
 Now we can go to any Razor page and the Dependency Injection container will provide the custom translation component:
-``` cs
-@inject ICustomTranslator Translator
-```
+
+<script src="https://gist.github.com/mu88/585976478220b23b7db1e8e27753092a.js?file=Index1.razor"></script>
 
 By using the following code, the translator can be consumed:
-``` cs
-<p>@Translator.GetTranslation("SomeString")</p>
-```
+
+<script src="https://gist.github.com/mu88/585976478220b23b7db1e8e27753092a.js?file=Index2.razor"></script>
 
 Of course, we could also consume the translation component in any other class provided by the Dependency Injection container:
 
-<script src="https://gist.github.com/mu88/5fbe74b35998c218b4db63726bb6411c.js"></script>
+<script src="https://gist.github.com/mu88/585976478220b23b7db1e8e27753092a.js?file=MyBusinessLogicService.cs"></script>
 
 And that's all! Well, almost :wink: The code would work, but it wouldn't do anything because there are no translations yet. By creating the two resource files `Resources\CustomTranslator.en.resx` (English) and `Resources\CustomTranslator.de.resx` (German) and adding the key `SomeString` with an appropriate translation, the mission is completed. When running the app, the UI will be localized in German.
 
