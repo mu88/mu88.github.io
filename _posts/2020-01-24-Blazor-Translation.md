@@ -46,6 +46,6 @@ If I'd like to add support for French, all I had to do would be:
 * Add `new CultureInfo("fr")` to the array `supportedCultures` in `Startup.Configure()`.
 
 As you've hopefully seen, doing `i18n` and `l10n` with Blazor Server is not difficult at all. For people being familiar with ASP.NET Core, it should be super straight-forward.  
-For me, the biggest challenge was to understand that the folder name `Resources` and file names `CustomTranslator.<<language>>.resx` have to match an exact pattern. Otherwise, the won't be recognized.
+For me, the biggest challenge was to understand that the folder name `Resources` and file names `CustomTranslator.<<language>>.resx` have to match an exact pattern. Otherwise, they won't be recognized.
 
 Thank you for reading!
