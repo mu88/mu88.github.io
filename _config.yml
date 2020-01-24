@@ -20,6 +20,9 @@ author:
 # Custom vars
 version:             1.0.0
 
+# Google Analytics
+google_analytics: UA-156889739-1
+
 # Disqus
 disqus:
   shortname: mu88
