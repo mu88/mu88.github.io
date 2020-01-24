@@ -13,56 +13,14 @@ Do you wonder where these strange names come from? It is pretty simple: take VS 
 But how to apply `i18n` and `l10n` to Blazor Server? At the time of porting my app (a couple of month ago), there were almost no information about that topic. So I had to find my own solution.
 
 Since Blazor Server is an ASP.NET Core application, I've written an injectable component called `CustomTranslator`:
-``` cs
-public class CustomTranslator : ICustomTranslator
-{
-    public CustomTranslator(IStringLocalizer<CustomTranslator> localizer)
-    {
-        Localizer = localizer;
-    }
 
-    public string GetTranslation(string text)
-    {
-        return Localizer[text];
-    }
-
-    private IStringLocalizer<CustomTranslator> Localizer { get;  }
-}
-
-public interface ICustomTranslator
-{
-    string GetTranslation(string text);
-}
-```
+<script src="https://gist.github.com/mu88/00ea8e8b497bc0e18a8014f596a27910.js"></script>
 
 As you can see, the interface `ICustomTranslator` accepts a string and returns the translation. The implementation `CustomTranslator` does a lookup in a property called `Localizer`. This component is a built-in functionality of ASP.NET Core ([see here](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/localization?view=aspnetcore-3.1)) and it comes from the Dependency Injection container.
 
 To use the custom translation service, it has to be registered within `Startup.cs`:
-``` cs
-public class Startup
-{
-    public void ConfigureServices(IServiceCollection services)
-    {
-        services.AddLocalization(options => options.ResourcesPath = "Resources");
-        services.AddSingleton<ICustomTranslator, CustomTranslator>();
-    }
 
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-    {
-        var supportedCultures = new[]
-                                {
-                                    new CultureInfo("en"),
-                                    new CultureInfo("de"),
-                                };
-        app.UseRequestLocalization(new RequestLocalizationOptions
-                                   {
-                                       DefaultRequestCulture = new RequestCulture("de"),
-                                       SupportedCultures = supportedCultures,
-                                       SupportedUICultures = supportedCultures
-                                   });
-    }
-}
-```
+<script src="https://gist.github.com/mu88/f8300a8567e7ff6b5a4e22bcf13ad9d2.js"></script>
 
 Let's go through this step by step. Within `ConfigureServices()`, basic localization is enabled and we're telling ASP.NET Core to look for all translations in the resource folder `Resources`. Next, the custom translation component is registered within the Dependency Injection container as a singleton.  
 The array `supportedCultures` within `Configure()` defines all the languages the application will support. The following line configures the application to support the requested languages and defines that the default language of my application is German (`de`).
@@ -78,22 +36,8 @@ By using the following code, the translator can be consumed:
 ```
 
 Of course, we could also consume the translation component in any other class provided by the Dependency Injection container:
-``` cs
-public class MyBusinessLogicService
-{
-    public MyBusinessLogicService(ICustomTranslator translator)
-    {
-        CustomTranslator = translator;
-    }
 
-    private ICustomTranslator CustomTranslator { get; }
-
-    private void MyMethod()
-    {
-        var translation = CustomTranslator.GetTranslation("SomeString");
-    }
-}
-```
+<script src="https://gist.github.com/mu88/5fbe74b35998c218b4db63726bb6411c.js"></script>
 
 And that's all! Well, almost ;) The code would work, but it wouldn't do anything because there are no translations yet. By creating the two resource files `Resources\CustomTranslator.en.resx` (English) and `Resources\CustomTranslator.de.resx` (German) and adding the key `SomeString` with an appropriate translation, the mission is completed. When running the app, the UI will be localized in German.
 
