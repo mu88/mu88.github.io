@@ -39,7 +39,7 @@ Of course, we could also consume the translation component in any other class pr
 
 <script src="https://gist.github.com/mu88/5fbe74b35998c218b4db63726bb6411c.js"></script>
 
-And that's all! Well, almost ;) The code would work, but it wouldn't do anything because there are no translations yet. By creating the two resource files `Resources\CustomTranslator.en.resx` (English) and `Resources\CustomTranslator.de.resx` (German) and adding the key `SomeString` with an appropriate translation, the mission is completed. When running the app, the UI will be localized in German.
+And that's all! Well, almost :wink: The code would work, but it wouldn't do anything because there are no translations yet. By creating the two resource files `Resources\CustomTranslator.en.resx` (English) and `Resources\CustomTranslator.de.resx` (German) and adding the key `SomeString` with an appropriate translation, the mission is completed. When running the app, the UI will be localized in German.
 
 If I'd like to add support for French, all I had to do would be:
 * Create a file `Resources\CustomTranslator.fr.resx` containing all the translations.
