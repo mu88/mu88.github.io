@@ -39,7 +39,9 @@ Doing so manually for each and every unit test would be a pain. Fortunately, the
 
 <script src="https://gist.github.com/mu88/184d4112bac50776ca20a0dfabd378c5.js?file=UnitTest.cs"></script>
 
-Using this refactoring technique enabled me to write unit test for a whole bunch components of our application. But it is important to keep one thing in mind: a private constructor is not marked as `private` just for fun. There are reasons why the component's creator chose it that way. Furthermore, we're bypassing the compiler via reflection - usually not the best idea :wink:  
+Using this refactoring technique enabled me to write unit tests for a whole bunch components of our application.
+
+But it is important to keep one thing in mind: a private constructor is not marked as `private` just for fun. There are reasons why the component's creator chose it that way. Furthermore, we're bypassing the compiler via reflection - usually not the best idea :wink:  
 So this technique is more like medicine: use it only in small doses or preferably not at all. Whenever possible, go for dependency injection all the way.
 
-Happy Coding :nerd_face: and thank you for reading!
+Happy coding and thank you for reading!
