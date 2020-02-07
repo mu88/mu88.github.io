@@ -15,7 +15,7 @@ The component to refactor is `CarFactory`. As you can see, a global static `Serv
 
 The pure idea of dependency injection would teach us to refactor the code to something like this:
 
-<script src="https://gist.github.com/mu88/184d4112bac50776ca20a0dfabd378c5.js?file=PureDependencyInjection.cs "></script>
+<script src="https://gist.github.com/mu88/184d4112bac50776ca20a0dfabd378c5.js?file=PureDependencyInjection.cs"></script>
 
 Now we're requesting the necessary dependencies via constructor injection. For unit testing, this is a perfect situation, because now we can inject mocks that mimic the required behavior and everything works fine.
 
@@ -29,7 +29,7 @@ So basically, there are two seemingly competing demands:
 
 And this is how I tended to consolidate the two demands:
 
-<script src="https://gist.github.com/mu88/184d4112bac50776ca20a0dfabd378c5.js?file=Final.cs "></script>
+<script src="https://gist.github.com/mu88/184d4112bac50776ca20a0dfabd378c5.js?file=Final.cs"></script>
 
 As you can see, the approach is pretty close to the former one using constructor injection. The difference lies in the two constructors: we still have the constructor specifying all the necessary dependencies, but it is declared `private`.  
 The `public` constructor still defines no parameters. However, it is calling the private constructor and resolves the necessary dependencies using the `ServiceLocator`. This way, nothing changes in terms of the component's public API and behavior.
