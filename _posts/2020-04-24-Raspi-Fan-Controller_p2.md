@@ -27,7 +27,7 @@ And finally, start the app using `sudo`. This is important because otherwise, re
 
 <script src="https://gist.github.com/mu88/080e248107d3722fa47411b17f6ce3da.js?file=StartApp"></script>
 
-There were some firewall/reverse proxy issues in my case, but that's out of this post. In the end, I could successfully access the app via http://raspberry:5000/cool and it was showing the current temperature.
+There were some firewall/reverse proxy issues in my case, but that would be beyond this post. In the end, I could successfully access the app via http://raspberry:5000/cool and it was showing the current temperature.
 
 
 ## Soldering
