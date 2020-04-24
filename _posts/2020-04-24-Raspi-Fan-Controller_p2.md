@@ -4,7 +4,7 @@ title: Is .NET Core cool enough to cool a Raspberry Pi? - Part 2
 description: Building a fan controller for a Raspberry Pi using Blazor Server
 ---
 
-In the [last post]({{ site.url }}/2020/04/24/Raspi-Fan-Controller_p1), I mainly described how to set up the software. In this part, I will focus on the hardware part and bringing everything together.
+In the [last post]({{ site.url }}/2020/04/24/Raspi-Fan-Controller_p1), I mainly described how to set up the software for the [Raspberry Pi Fan Controller](https://github.com/mu88/RaspiFanController). In this part, I will focus on the hardware part and bringing everything together.
 
 
 ## Bring it all together
@@ -12,26 +12,22 @@ In the [last post]({{ site.url }}/2020/04/24/Raspi-Fan-Controller_p1), I mainly 
 During the development, I could easily test my app by using the *Inverse of Control pattern*  and utilizing Dependency Injection to inject a fake temperature provider and fan controller. At a certain point, I was conscious enough to test it on the Raspi.
 
 At first, I was convinced to deploy the app via Docker. But after some time, I was not sure whether a `sudo` command  executed from within a Docker container will be forwarded to the OS (remember the temperature measurement). So I decided to ship it as a [self-contained executable](https://docs.microsoft.com/en-us/dotnet/core/deploying/#publish-self-contained). This can be done as following:
-```
-dotnet publish -r linux-arm -c Release /p:PublishSingleFile=true
-```
+
+<script src="https://gist.github.com/mu88/080e248107d3722fa47411b17f6ce3da.js?file=Deploy"></script>
 
 The following command copies the build results to the Raspi:
-```
-scp -r \bin\Release\netcoreapp3.1\linux-arm\publish pi@raspberry:/tmp/RaspiFanController/
-```
+
+<script src="https://gist.github.com/mu88/080e248107d3722fa47411b17f6ce3da.js?file=CopyResults"></script>
 
 On the Raspi, we have to allow the app to be executed:
-```
-chmod 777 /tmp/RaspiFanController/RaspiFanController
-```
+
+<script src="https://gist.github.com/mu88/080e248107d3722fa47411b17f6ce3da.js?file=chmod"></script>
 
 And finally, start the app using `sudo`. This is important because otherwise, reading the temperature doesn't work.
-```
-sudo /tmp/RaspiFanController/RaspiFanController
-```
 
-There were some firewall/reverse proxy issues in my case, but that's out of this post. In the end, I could successfully access the app and it was showing the current temperature.
+<script src="https://gist.github.com/mu88/080e248107d3722fa47411b17f6ce3da.js?file=StartApp"></script>
+
+There were some firewall/reverse proxy issues in my case, but that's out of this post. In the end, I could successfully access the app via http://raspberry:5000/cool and it was showing the current temperature.
 
 
 ## Soldering
@@ -68,27 +64,23 @@ And it was working! So I had no more excuses to solder everything and do the fin
 Now that everything was working fine, I wanted to register my little app as a service. This will ensure that the controller automatically gets started after a reboot.
 
 For this, I had to create a *service unit configuration file*  on the Raspi:
-```
- sudo nano /etc/systemd/system/RaspiFanController.service
-```
+
+<script src="https://gist.github.com/mu88/080e248107d3722fa47411b17f6ce3da.js?file=ServiceUnitConfiguration"></script>
 
 It has the following content:
 
 <script src="https://gist.github.com/mu88/080e248107d3722fa47411b17f6ce3da.js?file=RaspiFanController.service "></script>
 
 With the following commands, the service will be created:
-```
-sudo cp RaspiFanController.service /etc/systemd/system/RaspiFanController.service
-sudo systemctl daemon-reload
-sudo systemctl start RaspiFanController
-```
+
+<script src="https://gist.github.com/mu88/080e248107d3722fa47411b17f6ce3da.js?file=StartService"></script>
 
 Now the app will start on every reboot.
 
 
 ## Summary
 
-Due to modern developments in the .NET ecosystem, I was able to write a controller for a Linux device like a Raspberry Pi. I could leverage all the new features my favorite platform provides:
+Because of recent developments in the .NET ecosystem, I was able to write a controller for a Linux device like a Raspberry Pi. I could leverage all the new features my favorite platform provides:
 
 * Cross-platform
 * Worker Services
