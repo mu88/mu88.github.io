@@ -9,9 +9,9 @@ In the [last post]({{ site.url }}/2020/04/24/Raspi-Fan-Controller_p1), I mainly 
 
 ## Bring it all together
 
-During the development, I could easily test my app by using the *Inverse of Control pattern*  and utilizing Dependency Injection to inject a fake temperature provider and fan controller. At a certain point, I was conscious enough to test it on the Raspi.
+During the development, I could easily test my app by using the *Inverse of Control pattern*  and utilizing Dependency Injection to inject a fake temperature provider and fan controller. At a certain point, I was ready to test it on the Raspi.
 
-At first, I was convinced to deploy the app via Docker. But after some time, I was not sure whether a `sudo` command  executed from within a Docker container will be forwarded to the OS (remember the temperature measurement). So I decided to ship it as a [self-contained executable](https://docs.microsoft.com/en-us/dotnet/core/deploying/#publish-self-contained). This can be done as following:
+At first, I was convinced to deploy the app via Docker. But after some time, I was not sure whether a `sudo` command  executed from within a Docker container will be forwarded to the OS (remember the temperature measurement). So I decided to ship it as a [self-contained executable](https://docs.microsoft.com/en-us/dotnet/core/deploying/#publish-self-contained). This can be done as follows:
 
 <script src="https://gist.github.com/mu88/080e248107d3722fa47411b17f6ce3da.js?file=Deploy"></script>
 
