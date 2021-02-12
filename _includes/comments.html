@@ -45,7 +45,7 @@
         }
     }
     var data = localStorage.getItem('comments_{{ include.github_account }}_{{page.comment_issue_id}}');
-    if(data) {
+    if(data && data.length > 0) {
         loadComments(JSON.parse(data));
     } else {
         {% if include.require_cookie_consent == 'true' %}
