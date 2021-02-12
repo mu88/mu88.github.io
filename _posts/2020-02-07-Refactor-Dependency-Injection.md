@@ -2,7 +2,7 @@
 layout: post
 title: Dependency injection and legacy code
 description: How to improve the testability of legacy code by slightly introducing dependency injection.
-comments: true
+comment_issue_id: 1
 ---
 
 During the last couple of months, I was doing a major refactoring of the dependency injection infrastructure on the product I build with my colleagues. The application relies heavily on the [service locator pattern](https://en.wikipedia.org/wiki/Service_locator_pattern). To improve the testability, a refactoring pattern evolved that some other people might find useful.
