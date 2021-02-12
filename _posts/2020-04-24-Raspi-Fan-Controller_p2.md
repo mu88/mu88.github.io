@@ -2,6 +2,7 @@
 layout: post
 title: Is .NET Core cool enough to cool a Raspberry Pi? - Part 2
 description: Building a fan controller for a Raspberry Pi using Blazor Server
+comment_issue_id: 5
 ---
 
 In the [last post]({{ site.url }}/2020/04/24/Raspi-Fan-Controller_p1), I mainly described how to set up the software for the [Raspberry Pi Fan Controller](https://github.com/mu88/RaspiFanController). In this part, I will focus on the hardware part and bringing everything together.

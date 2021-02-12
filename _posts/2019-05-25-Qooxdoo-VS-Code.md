@@ -2,7 +2,7 @@
 layout: post
 title: Build and debug Qooxdoo with Visual Studio Code
 description: How-to build and debug Qooxdoo with Visual Studio Code
-comments: true
+comment_issue_id: 7
 ---
 
 Because of my job, I got in touch with the JavaScript framework [Qooxdoo](https://www.qooxdoo.org/). I've never heard about it before, since the web development solar system seems to rotate around Angular, React and all the other big frameworks.

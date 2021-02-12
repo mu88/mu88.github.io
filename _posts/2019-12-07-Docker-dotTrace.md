@@ -2,7 +2,7 @@
 layout: post
 title: Profiling a .NET Core 3.0 Console App running in Docker for Windows with dotTrace
 description: Profiling a .NET Core 3.0 Console App running in Docker for Windows with dotTrace
-comments: true
+comment_issue_id: 4
 ---
 
 Recently, I was asked to profile a .NET Console App running in Docker for Windows. I'm a big fan of the JetBrains tools for .NET: ReSharper, dotPeek, dotTrace - they are all part of my toolbelt. Since I've never profiled a Docker container with dotTrace, this post shall illustrate how to do this.

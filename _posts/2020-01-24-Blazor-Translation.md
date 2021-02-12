@@ -2,7 +2,7 @@
 layout: post
 title: Localizing texts in a server-side Blazor app
 description: How to use i18n (internationalization) and l10n (localization) with Blazor Server
-comments: true
+comment_issue_id: 3
 ---
 
 Like so many of us, I'm playing around with the different varieties of Blazor. Recently, I've ported an application based on Angular 2 and Electron to Blazor Server and [Electron.NET](https://github.com/ElectronNET). Thereby, I came across the topic of translating the app.

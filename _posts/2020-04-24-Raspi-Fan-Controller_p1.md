@@ -2,6 +2,7 @@
 layout: post
 title: Is .NET Core cool enough to cool a Raspberry Pi? - Part 1
 description: Building a fan controller for a Raspberry Pi using Blazor Server
+comment_issue_id: 2
 ---
 
 A couple of weeks ago, I bought a new toy: a [Raspberry Pi 4 Model B](https://www.raspberrypi.org/products/raspberry-pi-4-model-b/). I wanted to set up my own DNS server, but mainly, I wanted to get in contact with this new platform. Since I had already read other blog posts saying that the Raspi gets quite warm under normal conditions, I ordered a case with a built-in fan as well.  

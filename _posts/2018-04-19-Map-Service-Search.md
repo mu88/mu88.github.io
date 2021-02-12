@@ -2,7 +2,7 @@
 layout: post
 title: Map Service Search
 description: Using FME, ArcGIS & AngularJS to index and search Map Services.
-comments: true
+comment_issue_id: 8
 ---
 
 Almost a year ago, I gave a talk at the [FME User Conference in Vancouver](https://fmeuc.com/) with the title *"Hey dude, where is my Workspace?"* This talk was focussed on the question how to keep track of all the FME Workspaces flying around all over the enterprise. In my case, this challenge was tremendously simplified by a tool which allowed to search through the metadata of Workspaces hosted on several instances of [FME Server](https://www.safe.com/fme/fme-server/).  

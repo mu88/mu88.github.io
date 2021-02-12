@@ -2,7 +2,7 @@
 layout: post
 title: Dive into your Android's device network traffic
 description: Analyze the network traffic of your Android device with Fiddler
-comments: true
+comment_issue_id: 6
 ---
 
 Recently, I came across the challenge to analyze the network traffic of my Android smartphone. I wanted to know which HTTP requests a specific app executes if the user triggers an UI action. When analyzing any app on a Windows PC, my silver bullet is [Fiddler](https://www.telerik.com/fiddler). So I was curious how to do this with my smartphone.
