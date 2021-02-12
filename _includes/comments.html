@@ -45,7 +45,7 @@
         }
     }
     var data = localStorage.getItem('comments_{{ include.github_account }}_{{page.comment_issue_id}}');
-    if(data && data.length > 0) {
+    if(data && data.length > 2) {
         loadComments(JSON.parse(data));
     } else {
         {% if include.require_cookie_consent == 'true' %}
@@ -55,6 +55,7 @@
             else {
                 document.getElementById("comments").innerHTML = "<h3>Comments</h3><p>You can <a href='https://github.com/{{ include.github_account }}/issues/{{page.comment_issue_id}}' target='_blank'>view the comments</a> on GitHub (<a id='approve-cookies'>approve third party scripts to view them inline</a>).</p>";
                 document.getElementById('approve-cookies').addEventListener("click",function() {
+                    eraseCookie("cookie-notice-denied");
                     document.getElementById('cookie-notice').style.display = 'block';
                 });
             }
