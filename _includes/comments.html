@@ -9,7 +9,7 @@
         Array.prototype.forEach.call(elements, function(el, i){
             el.remove();
         });
-        $.ajax("https://api.github.com/repos/{{ include.github_account }}/issues/{{page.comment_issue_id}}/comments?per_page=100", {
+        $.ajax("https://api.github.com/repos/{{ include.github_account }}/issues/{{page.comment_issue_id}}/comments?per_page=20", {
             headers: {Accept: "application/vnd.github.full+json"},
             dataType: "json",
             success: function(msg){
