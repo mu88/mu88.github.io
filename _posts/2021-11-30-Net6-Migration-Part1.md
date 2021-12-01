@@ -31,6 +31,8 @@ But I probably used it in the wrong way, because I always ended up with either a
 # Working with ASP.NET Core 6
 Migrating to ASP.NET Core's new version worked almost fluently. I had some build warnings related to some now nullable properties (e. g. `HttpResponseMessage.Headers.Location` or `HttpContext.User.Identity`), but fixing that was just a matter of seconds.
 
+There are so many heated discussions whether to use the new [Minimal APIs](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/minimal-apis) or not. I just can say that I didn't introduce them: not because I don't like them, but because we have a well working set of controllers which I didn't want to refactor.
+
 # Working with EF Core 6
 Upgrading EF Core was more... well, I'd say challenging 😎 compared to ASP.NET Core.
 
@@ -83,6 +85,6 @@ Fortunately I came across [this GitHub issue](https://github.com/dotnet/efcore/i
 But honestly I didn't check how this did work in the past.
 
 # Closing
-That's it for today! In the next post I will share some broader experiences, e. g. on new language features and IDEs.
+That's it for today! In the [next part]({{ site.url }}/2021/12/01/Net6-Migration-Part2.html), I will share some broader experiences, e. g. on new language features and IDEs.
 
 Take care and thanks for reading 👋🏻
