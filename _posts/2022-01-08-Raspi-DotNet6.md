@@ -19,7 +19,7 @@ deb http://raspbian.raspberrypi.org/raspbian/ testing main
 ```
 2. Install the package update:<br>
 ```shell
-apt-get install libseccomp2/testing
+sudo apt-get install libseccomp2/testing
 ```
 
 After a final reboot I could successfully run my Docker containers based on .NET 6.
