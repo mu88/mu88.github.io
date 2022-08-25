@@ -38,7 +38,7 @@ Upgrading EF Core was more... well, I'd say challenging 😎 compared to ASP.NET
 
 ## Use entities instead of IDs
 We had some sort of data seeding on `DbContext` creation to provide certain test data to our tests. Unfortunately the data seeder made heavily use of object IDs when referring to other objects. Just consider the following, rather simplified example:
-```c#
+{% highlight csharp %}
 public class Author
 {
     public int Id { get; set; }
@@ -52,20 +52,20 @@ public class Book
     public int AuthorId { get; set; }
     // more stuff
 }
-```
+{% endhighlight %}
 
 Within the data seeder, there was code which looked similar to:
-```c#
+{% highlight csharp %}
 var author = new Author { Id = 1 };
 var book = new Book { AuthorId = 1 };
-```
+{% endhighlight %}
 
 This works if the `author` entity also gets persisted with an ID of 1. I didn't analyze it in depth, but that was not longer the case after the upgrade to EF Core 6.\
 So when running the tests, most of them failed due to some sort of foreign key violation. The fix was pretty simple:
-```c#
+{% highlight csharp %}
 var author = new Author();
 var book = new Book { Author = author };
-```
+{% endhighlight %}
 
 But finding all the relevant spots took me several hours of boring "fix and try".
 

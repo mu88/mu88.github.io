@@ -14,19 +14,27 @@ During the development, I could easily test my app by using the *Inverse of Cont
 
 At first, I was convinced to deploy the app via Docker. But after some time, I was not sure whether a `sudo` command  executed from within a Docker container will be forwarded to the OS (remember the temperature measurement). So I decided to ship it as a [self-contained executable](https://docs.microsoft.com/en-us/dotnet/core/deploying/#publish-self-contained). This can be done as follows:
 
-<script src="https://gist.github.com/mu88/080e248107d3722fa47411b17f6ce3da.js?file=Deploy"></script>
+{% highlight shell %}
+dotnet publish -r linux-arm -c Release /p:PublishSingleFile=true
+{% endhighlight %}
 
 The following command copies the build results to the Raspi:
 
-<script src="https://gist.github.com/mu88/080e248107d3722fa47411b17f6ce3da.js?file=CopyResults"></script>
+{% highlight shell %}
+scp -r \bin\Release\netcoreapp3.1\linux-arm\publish pi@raspberry:/tmp/RaspiFanController/
+{% endhighlight %}
 
 On the Raspi, we have to allow the app to be executed:
 
-<script src="https://gist.github.com/mu88/080e248107d3722fa47411b17f6ce3da.js?file=chmod"></script>
+{% highlight shell %}
+chmod 777 /tmp/RaspiFanController/RaspiFanController
+{% endhighlight %}
 
 And finally, start the app using `sudo`. This is important because otherwise, reading the temperature doesn't work.
 
-<script src="https://gist.github.com/mu88/080e248107d3722fa47411b17f6ce3da.js?file=StartApp"></script>
+{% highlight shell %}
+sudo /tmp/RaspiFanController/RaspiFanController
+{% endhighlight %}
 
 There were some firewall/reverse proxy issues in my case, but that would be beyond this post. In the end, I could successfully access the app via http://raspberry:5000/cool and it was showing the current temperature.
 
@@ -66,15 +74,37 @@ Now that everything was working fine, I wanted to register my little app as a se
 
 For this, I had to create a *service unit configuration file*  on the Raspi:
 
-<script src="https://gist.github.com/mu88/080e248107d3722fa47411b17f6ce3da.js?file=ServiceUnitConfiguration"></script>
+{% highlight shell %}
+sudo nano /etc/systemd/system/RaspiFanController.service
+{% endhighlight %}
 
 It has the following content:
 
-<script src="https://gist.github.com/mu88/080e248107d3722fa47411b17f6ce3da.js?file=RaspiFanController.service "></script>
+{% highlight config %}
+[Unit]
+Description=Raspberry Pi Fan Controller based on Blazor Server
+
+[Service]
+WorkingDirectory=/tmp/RaspiFanController
+ExecStart=/tmp/RaspiFanController/RaspiFanController &
+Restart=always
+# Restart service after 10 seconds if the dotnet service crashes:
+RestartSec=10
+SyslogIdentifier=raspifancontroller
+User=root
+Environment=ASPNETCORE_ENVIRONMENT=Production
+
+[Install]
+WantedBy=multi-user.target
+{% endhighlight %}
 
 With the following commands, the service will be created:
 
-<script src="https://gist.github.com/mu88/080e248107d3722fa47411b17f6ce3da.js?file=StartService"></script>
+{% highlight shell %}
+sudo cp RaspiFanController.service /etc/systemd/system/RaspiFanController.service
+sudo systemctl daemon-reload
+sudo systemctl start RaspiFanController
+{% endhighlight %}
 
 Now the app will start on every reboot.
 

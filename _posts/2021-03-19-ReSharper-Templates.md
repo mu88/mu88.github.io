@@ -13,8 +13,21 @@ Live Templates are snippets that can be inserted while coding in a file. This ca
  
  Out of the box, there are 170+ templates that come with ReSharper. But we can define our own templates via the *Templates Explorer* (*Extensions → ReSharper → Tools → Templates Explorer...* in Visual Studio). For example, I have a small template named `xunitasync` that looks like this:
 
- <script src="https://gist.github.com/mu88/99bb3c4c3447a210b3c9c67470398e84.js?file=LiveTemplate.cs"></script>
+{% highlight csharp %}
+[Xunit.Fact]
+public async Task $TestName$()
+{
+    // Arrange
+    var testee = new $TestType$();
+    $END$
 
+    // Act
+
+    // Assert
+    throw new System.NotImplementedException();
+}
+{% endhighlight %}
+ 
  When typing `xunitasync` within a class, this template will create an asynchronous xUnit test body for me. When looking closer to the template code, we notice the two strings `$TestName$` and `$END$`. These are Template Parameters and they are context-aware. In the most easiest way, they are just plain strings that ReSharper will ask us to enter when using the template. For example, the `$TestName$` is just the name of the test we want to use. `$END$` is the location where the caret will be placed after the template has been applied. In my case, I want to start writing the *Arrange* part of the test.
 
  By *context-aware*, I mean that such parameters can be more than just plain strings. For example, a parameter can be configured so that whenever it is applied, IntelliSense will pop-up and a type is requested. This happens in the example for the parameter `$TestType$`. JetBrains calls them *Template Macros* and there's a bunch of them ([see here](https://www.jetbrains.com/help/resharper/Template_Macros.html)).
@@ -24,23 +37,49 @@ I have plenty of those live templates, e. g. for creating To-do items or Get-Onl
  <h2>Surround Templates</h2>
  The second interesting option are Surround Templates. They can be used to surround a selected piece of code with another piece of code. Let's look at the following template:
 
- <script src="https://gist.github.com/mu88/99bb3c4c3447a210b3c9c67470398e84.js?file=SurroundTemplate.cs"></script>
+{% highlight csharp %}
+var stopwatch = System.Diagnostics.Stopwatch.StartNew();
 
+$SELECTION$
+
+stopwatch.Stop();$END$
+{% endhighlight %}
+ 
  We are already familiar with the `$END$` parameter. The `$SELECTION$` parameter represents the piece of code that is selected. Before this code, a [`Stopwatch`](https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.stopwatch.startnew?view=net-5.0) instance `stopwatch` is created and started. After the selected code, `stopwatch` is stopped. I use this frequently as the most trivial form of performance measurement.
 
  With this template, the following code...
 
- <script src="https://gist.github.com/mu88/99bb3c4c3447a210b3c9c67470398e84.js?file=SurroundTemplateExample1.cs"></script>
-
+{% highlight csharp %}
+var service = new MyCustomService();
+await service.ExecuteLongRunningProcessAsync();
+{% endhighlight %}
+ 
  ...becomes to...
 
- <script src="https://gist.github.com/mu88/99bb3c4c3447a210b3c9c67470398e84.js?file=SurroundTemplateExample2.cs"></script>
+{% highlight csharp %}
+var stopwatch = System.Diagnostics.Stopwatch.StartNew();
 
+var service = new MyCustomService();
+await service.ExecuteLongRunningProcessAsync();
+
+stopwatch.Stop();
+{% endhighlight %}
 
  <h2>File Templates</h2>
   I tend to use them not as much as Live or Surround Templates, but File Templates are also very handy in some situations. For example, when working with MSTest, each test class has to be decorated with the `[TestClass]` attribute. I have a File Template that creates a MSTest file for me and it looks like this:
 
- <script src="https://gist.github.com/mu88/99bb3c4c3447a210b3c9c67470398e84.js?file=FileTemplate.cs"></script>
+{% highlight csharp %}
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace $Namespace$
+{
+    [TestClass]
+    public class $TestClassName$
+    {
+        $END$
+    }
+}
+{% endhighlight %}
 
  Again, there are some parameters which are pretty obvious: `$Namespace$` stands for the Namespace and it will be automatically retrieved by a macro. So I never have to take care of this manually, it will be determined by the file location within the Solution.
 

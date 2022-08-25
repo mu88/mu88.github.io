@@ -1,3 +1,54 @@
+/* Begin Syntax Highlighting */
+.lineno {
+  word-break: keep-all;
+  padding: 0px;
+  text-align: center;
+  font-size: 0.7rem;
+ }
+
+.highlight {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid #e5e5e5;
+  background-color: #f9f9f9;
+}
+
+td.gutter.gl {
+  border: unset;
+}
+
+td.code {
+  border: unset;
+}
+
+.rouge-table {
+  margin-bottom: 0px;
+  border: unset;
+}
+
+.code > pre {
+  white-space: revert;
+  padding-left: 0px;
+  font-size: 0.7rem;
+  padding-bottom: 0px;
+  padding-top: 0px;
+ }
+
+figure.highlight > pre {
+  white-space: revert;
+  padding: 4px;
+  font-size: 0.7rem;
+}
+
+figure.highlight {
+  margin-left: 0px;
+}
+/* End Syntax Highlighting */ 
+
+.commentgravatar > img {
+  margin: 0;
+}
+
 img.emoji {
     display: inline;
     margin: 0

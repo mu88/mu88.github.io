@@ -13,14 +13,14 @@ As I pulled the new Docker images onto my Raspi running _Debian Buster_ and trie
 
 After filing a [GitHub issue](https://github.com/dotnet/aspnetcore/issues/39372), [mthalman](https://github.com/mthalman) gave me golden hint: the `libseccomp` package had to be updated. For this, the following steps were necessary:
 1. Add additional source repo for `apt-get`:<br>
-```shell
+{% highlight shell %}
 sudo nano /etc/apt/sources.list
 deb http://raspbian.raspberrypi.org/raspbian/ testing main
-```
+{% endhighlight %}
 2. Install the package update:<br>
-```shell
+{% highlight shell %}
 sudo apt-get install libseccomp2/testing
-```
+{% endhighlight %}
 
 After a final reboot I could successfully run my Docker containers based on .NET 6.
 

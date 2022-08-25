@@ -33,7 +33,7 @@
                 if(readCookie('cookie-notice-accepted')=='true') {
                     var cavatarlink = data[i].user.avatar_url;
                 } else {
-                    var cavatarlink = '/img/emptyavatar.png';
+                    var cavatarlink = '/public/emptyavatar.png';
                     cbody = cbody.replace(/<img src=/g,"<img data-src=");
                 }
             {% else %}

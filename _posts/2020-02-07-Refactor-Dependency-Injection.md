@@ -9,13 +9,48 @@ During the last couple of months, I was doing a major refactoring of the depende
 
 Let's start with an example showing the initial situation:
 
-<script src="https://gist.github.com/mu88/184d4112bac50776ca20a0dfabd378c5.js?file=ServiceLocator.cs"></script>
+{% highlight csharp linenos %}
+public class CarFactory
+{
+    public ICar ConstructCar()
+    {
+        return new Car(ServiceLocator.Resolve<IEngine>(),
+                       ServiceLocator.Resolve<IChassis>());
+    }
+}
+
+public static class ServiceLocator
+{
+    public static T Resolve<T>()
+    {
+        // Resolve instance from registered service registrations
+    }
+}
+{% endhighlight %}
 
 The component to refactor is `CarFactory`. As you can see, a global static `ServiceLocator` is used to obtain the engine and chassis instances building up the car to construct. Writing a unit test for this class can be cumbersome because you have to consider the global service locator. Furthermore, the `ServiceLocator` obscures the usage of further dependencies like `IEngine` and `IChassis`.
 
 The pure idea of dependency injection would teach us to refactor the code to something like this:
 
-<script src="https://gist.github.com/mu88/184d4112bac50776ca20a0dfabd378c5.js?file=PureDependencyInjection.cs"></script>
+{% highlight csharp linenos %}
+public class CarFactory
+{
+    public CarFactory(IEngine engine, IChassis chassis)
+    {
+        Engine = engine;
+        Chassis = chassis;
+    }
+
+    public IEngine Engine { get; private set; } // public for testing
+
+    public IChassis Chassis { get; private set; } // public for testing
+
+    public ICar ConstructCar()
+    {
+        return new Car(Engine, Chassis);
+    }
+}
+{% endhighlight %}
 
 Now we're requesting the necessary dependencies via constructor injection. For unit testing, this is a perfect situation, because now we can inject mocks that mimic the required behavior and everything works fine.
 
@@ -29,7 +64,31 @@ So basically, there are two seemingly competing demands:
 
 And this is how I tended to consolidate the two demands:
 
-<script src="https://gist.github.com/mu88/184d4112bac50776ca20a0dfabd378c5.js?file=Final.cs"></script>
+{% highlight csharp linenos %}
+public class CarFactory
+{
+    public CarFactory() 
+      : this(ServiceLocator.Resolve<IEngine>(),
+             ServiceLocator.Resolve<IChassis>())
+    {
+    }
+
+    private CarFactory(IEngine engine, IChassis chassis)
+    {
+        Engine = engine;
+        Chassis = chassis;
+    }
+
+    public IEngine Engine { get; private set; } // public for testing and a very very very very very long comment
+
+    public IChassis Chassis { get; private set; } // public for testing
+
+    public ICar ConstructCar()
+    {
+        return new Car(Engine, Chassis);
+    }
+}
+{% endhighlight %}
 
 As you can see, the approach is pretty close to the former one using constructor injection. The difference lies in the two constructors: we still have the constructor specifying all the necessary dependencies, but it is declared `private`.  
 The `public` constructor still defines no parameters. However, it is calling the private constructor and resolves the necessary dependencies using the `ServiceLocator`. This way, nothing changes in terms of the component's public API and behavior.
@@ -37,7 +96,27 @@ The `public` constructor still defines no parameters. However, it is calling the
 But then what is the added value in terms of unit testing? Unlike the C# compiler, .NET allows the use of private constructors via reflection ([see here](https://docs.microsoft.com/en-us/dotnet/api/system.activator.createinstance?view=netframework-4.8#System_Activator_CreateInstance_System_Type_System_Boolean_)). This enables us to call the private constructor from an unit test.  
 Doing so manually for each and every unit test would be a pain. Fortunately, there are packages like [AutoMocker for Moq](https://github.com/moq/Moq.AutoMocker) that take away the pain. Using that package, our test looks like this:
 
-<script src="https://gist.github.com/mu88/184d4112bac50776ca20a0dfabd378c5.js?file=UnitTest.cs"></script>
+{% highlight csharp linenos %}
+[TestClass]
+public class CarFactoryTests
+{
+    [TestMethod]
+    public void ConstructCar()
+    {
+        // Arrange
+        var autoMocker = new AutoMocker();
+        autoMocker.Setup<IEngine,string>(x=>x.Type).Returns("V6");
+        var testee = autoMocker.CreateInstance<CarFactory>(true);
+
+        // Act
+        var result = testee.ConstructCar();
+
+        // Assert
+        result.Should().NotBeNull();
+        result.Engine.Type.Should().Be("V6");
+    } 
+}
+{% endhighlight %}
 
 Using this refactoring technique enabled me to write unit tests for a whole bunch components of our application.
 

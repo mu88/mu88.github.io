@@ -13,13 +13,39 @@ Unfortunately, I sometimes mess up with the different types of commit or simply 
 
 The PowerShell script looks like this:
 
-<script src="https://gist.github.com/mu88/3468d460d52455021284a6317a9f1f83.js?file=Git_EnsureConventionalCommitMessage.ps1"></script>
+{% highlight powershell linenos %}
+# The commit message has to be loaded from a Git-internal file
+$commitMessage = Get-Content $args[0]
+
+# Attention: contains a filter for Jira!
+$conventionalCommitRegex = "(?-i)^(build|ci|docs|feat|fix|perf|refactor|style|test|chore|revert|BREAKING CHANGE)!?(\([\w\-]+\))?:\s(\w{3}-\d{4})?\s?[a-z]{1}.*"
+
+# Without Jira filter:
+# $conventionalCommitRegex = "(?-i)^(build|ci|docs|feat|fix|perf|refactor|style|test|chore|revert|BREAKING CHANGE)!?(\([\w\-]+\))?:\s[a-z]{1}.*"
+
+$nuKeeperRegex = "(?-i)^:package: [A-Z].*"
+
+if ($commitMessage -match $conventionalCommitRegex) {
+    exit 0
+}
+
+if ($commitMessage -match $nuKeeperRegex) {
+    exit 0
+}
+
+Write-Host "The commit message does not match the Conventional Commit rules"
+
+exit 1
+{% endhighlight %}
 
 Git's current commit message is stored in the file `.git/COMMIT_EDITMSG` which gets read on the first line of the script. Then a pretty long RegEx defines all the different Conventional Commit varieties. This RegEx is executed against the current commit message in line 12. If it matches, `exit 0;` indicates success to the Git hook.
 
 To enable this Git hook for a repository, the file `.git/commit-msg` has to be created with the following content:
 
-<script src="https://gist.github.com/mu88/3468d460d52455021284a6317a9f1f83.js?file=commit-msg"></script>
+{% highlight shell %}
+#!/bin/sh
+pwsh -noprofile C:/source/GitHub/config/hooks/Git_EnsureConventionalCommitMessage.ps1 $1
+{% endhighlight %}
 
 It is a default Shell script which runs `pwsh` (the PowerShell executable) and the formerly explained PowerShell script. The `-noprofile` flag skips loading the current user's PowerShell profile which is unwanted in my case (as I have several things like [Oh My Posh](https://ohmyposh.dev/) configured). Finally, the `$1` argument is provided by Git and contains the path of the Git commit message file (remember: `.git/COMMIT_EDITMSG`).
 
@@ -28,11 +54,17 @@ But when using `git commit -a -m "feat: my fancy new feature"`, everything works
 
 This is great so far. But the setting has the disadvantage that the Git hook has to be configured for each and every repository. But with Git, there is a solution for everything 👍🏻 Look at my customized `.gitconfig`:
 
-<script src="https://gist.github.com/mu88/3468d460d52455021284a6317a9f1f83.js?file=.gitconfig"></script>
+{% highlight conf %}
+[includeIf "gitdir:C:/source/GitHub/"]
+    path = .gitconfig-github
+{% endhighlight %}
 
 Whenever I'm inside the directory `C:\source\GitHub` (where all my cloned GitHub repos live), the additional Git config file `.gitconfig-github` with the following additional content gets loaded:
 
-<script src="https://gist.github.com/mu88/3468d460d52455021284a6317a9f1f83.js?file=.gitconfig-github"></script>
+{% highlight conf %}
+[core]
+    hooksPath  = C:/source/GitHub/config/hooks
+{% endhighlight %}
 
 It overrides the path where Git looks for the hooks to execute. So instead of using the default `.git/hooks`, this path points to `C:\source\GitHub\config\hooks` on my dev machine and inside this folder there is the Git hook `commit-msg` and the PowerShell script `Git_EnsureConventionalCommitMessage.ps1`.
 Now whenever I clone a new repository into `C:\source\GitHub`, the Git hook will be applied automatically 🤓

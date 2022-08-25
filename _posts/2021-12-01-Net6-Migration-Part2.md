@@ -14,7 +14,7 @@ C# 10 and .NET 6 introduced some pretty interesting new features and syntactic s
 We all mentally ignore the first twenty or so lines of each C# file because of all the `using` declarations. This is where Global Using Declarations and Implicit Usings can shine. You can learn more about this in [this great blog post from Microsoft](https://devblogs.microsoft.com/dotnet/welcome-to-csharp-10/#global-and-implicit-usings).
 
 I've introduced the following file `Directory.Build.props` at the root of our repo:
-```msbuild
+{% highlight xml %}
 <Project>
   <PropertyGroup>
     <ImplicitUsings>true</ImplicitUsings>
@@ -38,28 +38,28 @@ I've introduced the following file `Directory.Build.props` at the root of our re
     </Compile>
   </ItemGroup>
 </Project>
-```
+{% endhighlight %}
 
 This file gets automatically picked up by the compiler and links the mentioned C# classes into projects matching the naming pattern.
 
 The `GlobalUsings\GlobalUsingsFor*.cs` files look like this:
-```c#
+{% highlight csharp %}
 // GlobalUsings.cs
 global using System.Collections.ObjectModel;
-```
-```c#
+{% endhighlight %}
+{% highlight csharp %}
 // GlobalUsingsForTests.cs
 global using FluentAssertions;
 global using Xunit;
 global using Xunit.Sdk;
-```
-```c#
+{% endhighlight %}
+{% highlight csharp %}
 // GlobalUsingsForWebApi.cs
 global using Microsoft.AspNetCore.Authorization;
 global using Microsoft.AspNetCore.Mvc;
 global using System.Net;
 global using System.Net.Mime;
-```
+{% endhighlight %}
 
 So the next time I create a test assembly named `Yoda.Test` (which matches our naming convention), it automatically references xUnit and Fluent Assertions.
 
@@ -67,16 +67,17 @@ Finally I did a Solution-wide cleanup of all `using` declarations and could remo
 
 ## File-scoped Namespaces
 All the years we C# developers wasted two or four spaces of horizontal indentation although approximately 99% of all C# files contain only a single class. With C# 10, we can rewrite such a file to:
-```c#
+{% highlight csharp %}
 namespace MyNamespace;
 
 public class MyClass
 {
     // more stuff
 }
-```
+{% endhighlight %}
+
 Previously it looked like this:
-```c#
+{% highlight csharp %}
 namespace MyNamespace
 {
     public class MyClass
@@ -84,7 +85,7 @@ namespace MyNamespace
         // more stuff
     }
 }
-```
+{% endhighlight %}
 
 [Rider](https://www.jetbrains.com/rider/), my favorite IDE, provides a refactoring to apply this pattern to the whole Solution.
 
@@ -98,44 +99,47 @@ The other 10% are spots where the new serializer is more strict than Json.NET. L
 
 ### Casing of JSON properties
 Imagine the following class to be serialized:
-```c#
+{% highlight csharp %}
 public class MyDto
 {
     Dictionary<string, int> Data { get; set; }
 }
-```
+{% endhighlight %}
+
 With Json.NET, all keys of `Data` were camelcase in the resulting JSON. Now with `System.Text.Json`, the keys keep their casing the way there are added to `Data`. Take a look at the following example:
-```c#
+{% highlight csharp %}
 var dto = new Dto { Data = new Dictionary<string, string> { {"Bla", "blub"} } };
 // Json.NET           →  {"data": {"bla": "blub"}}
 // System.Text.Json   →  {"Data": {"Bla": "blub"}}
-```
+{% endhighlight %}
+
 This actually broke some of our client code, but it can be controlled with...
-```c#
+{% highlight csharp %}
 var options = new JsonSerializerOptions();
 options.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
 options.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;
-```
+{% endhighlight %}
 
 ### Public property accessors
 The following class could be deserialized using Json.NET:
-```c#
+{% highlight csharp %}
 public class MyDto<T>
 {
     public List<T> Data;
 }
-```
+{% endhighlight %}
+
 With `System.Text.Json`:
-```c#
+{% highlight csharp %}
 public class MyDto<T>
 {
     public List<T> Data { get; set; }
 }
-```
+{% endhighlight %}
 
 ### Public constructor
 The following class could be deserialized using Json.NET:
-```c#
+{% highlight csharp %}
 public class MyDto
 {
     public MyDto(string name) => Name = name;
@@ -144,9 +148,10 @@ public class MyDto
 
     public int Age { get; set; }
 }
-```
+{% endhighlight %}
+
 With `System.Text.Json`:
-```c#
+{% highlight csharp %}
 public class MyDto
 {
     [JsonConstructor]
@@ -160,7 +165,7 @@ public class MyDto
 
     public int Age { get; set; }
 }
-```
+{% endhighlight %}
 
 # And what about tools and IDEs?
 All of our Visual Studio developers had to switch to Visual Studio 2022 since this is the only version supporting .NET 6.

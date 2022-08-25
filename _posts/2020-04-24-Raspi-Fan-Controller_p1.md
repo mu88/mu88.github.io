@@ -22,7 +22,9 @@ All the code can be found in my GitHub repo [Raspi Fan Controller](https://githu
 
 To control the temperature, we need to measure it, right? Fortunately, the Raspi's OS *Raspian* comes with a built-in command to retrieve its current temperature:
 
-<script src="https://gist.github.com/mu88/080e248107d3722fa47411b17f6ce3da.js?file=ReadTemperature"></script>
+{% highlight shell %}
+sudo vcgencmd measure_temp
+{% endhighlight %}
 
 It returns a text like `temp=39.0°C`. The class [`Logic\RaspiTemperatureProvider`](https://github.com/mu88/RaspiFanController/blob/master/RaspiFanController/Logic/RaspiTemperatureProvider.cs) does a little bit of RegEx to parse the current temperature and unit into a tuple `(39.0, "C")`.
 
@@ -40,7 +42,11 @@ In between, there is a sleep time between two loop runs via `Task.Delay()`.
 
 This is the place where we really access the hardware. The Raspi has so called *General Purpose Input/Output* (GPIO) pins - physical pins on its board that can be used for custom extension. The NuGet package [.NET Core IoT Library](https://github.com/dotnet/iot) abstracts and allows us to set these pins in a very easy way. Take a look into [`Logic\RaspiFanController`](https://github.com/mu88/RaspiFanController/blob/master/RaspiFanController/Logic/RaspiFanController.cs):
 
-<script src="https://gist.github.com/mu88/080e248107d3722fa47411b17f6ce3da.js?file=SetGpioPin"></script>
+{% highlight csharp %}
+var gpioController = new GpioController();
+gpioController.OpenPin(17, PinMode.Output);
+gpioController.Write(17, PinValue.High);
+{% endhighlight %}
 
 The turn on the fan, the GPIO pin 17 is set to high value. And that's it.
 
