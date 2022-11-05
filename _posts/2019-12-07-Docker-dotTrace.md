@@ -92,8 +92,8 @@ docker exec -d test RemoteAgent/RemoteAgent.exe
 
 Finally, we can connect to our application using dotTrace. As **Remote Agent URL**, we use `net.tcp://localhost:9100/RemoteAgent`. This accesses the local port 9100 of my machine which is mapped to port 9100 of the Docker container where the Remote Agent is up and running. Now we can attach dotTrace to `TestWithDocker.exe` and collect snapshots as usual.
 
-![]({{ site.url }}/public/post_assets/191207_Docker_dotTrace/image1.jpg)
+![]({{ site.baseurl }}/public/post_assets/191207_Docker_dotTrace/image1.jpg)
 
 As you can see in the following screenshot, everything works as usual when profiling an application and we find our method `DoSomeWork()`:
 
-![]({{ site.url }}/public/post_assets/191207_Docker_dotTrace/image2.jpg)
+![]({{ site.baseurl }}/public/post_assets/191207_Docker_dotTrace/image2.jpg)

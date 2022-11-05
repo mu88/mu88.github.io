@@ -55,7 +55,7 @@ The turn on the fan, the GPIO pin 17 is set to high value. And that's it.
 
 The user interface is a single Razor page providing the necessary information like current temperature and threshold. These information are read from the temperature controller.
 
-<img src="{{ site.url }}/public/post_assets/200424_Raspi_Fan_Controller/Image1.jpg" width="350" />
+<img src="{{ site.baseurl }}/public/post_assets/200424_Raspi_Fan_Controller/Image1.jpg" width="350" />
 
 
-In the [next part]({{ site.url }}/2020/04/24/Raspi-Fan-Controller_p2), I will describe how to bring everything together.
+In the [next part]({{ site.baseurl }}/2020/04/24/Raspi-Fan-Controller_p2), I will describe how to bring everything together.

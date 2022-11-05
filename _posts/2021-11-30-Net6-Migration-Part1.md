@@ -85,6 +85,6 @@ Fortunately I came across [this GitHub issue](https://github.com/dotnet/efcore/i
 But honestly I didn't check how this did work in the past.
 
 # Closing
-That's it for today! In the [next part]({{ site.url }}/2021/12/01/Net6-Migration-Part2.html), I will share some broader experiences, e. g. on new language features and IDEs.
+That's it for today! In the [next part]({{ site.baseurl }}/2021/12/01/Net6-Migration-Part2.html), I will share some broader experiences, e. g. on new language features and IDEs.
 
 Take care and thanks for reading 👋🏻

@@ -4,7 +4,7 @@ title: Migrating from .NET Core 3.1 to .NET 6 - Part 2
 comment_issue_id: 11
 ---
 
-In the [last part]({{ site.url }}/2021/11/30/Net6-Migration-Part1.html), I described some issues during the migration of the EF Core and ASP.NET Core part of our .NET Solution at [Swiss Post](https://developer.apis.post.ch).\
+In the [last part]({{ site.baseurl }}/2021/11/30/Net6-Migration-Part1.html), I described some issues during the migration of the EF Core and ASP.NET Core part of our .NET Solution at [Swiss Post](https://developer.apis.post.ch).\
 This time I will focus on broader things like IDEs and new language/runtime features.
 
 # Working with .NET 6

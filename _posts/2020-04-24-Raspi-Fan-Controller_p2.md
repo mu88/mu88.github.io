@@ -5,7 +5,7 @@ description: Building a fan controller for a Raspberry Pi using Blazor Server
 comment_issue_id: 5
 ---
 
-In the [last post]({{ site.url }}/2020/04/24/Raspi-Fan-Controller_p1), I mainly described how to set up the software for the [Raspberry Pi Fan Controller](https://github.com/mu88/RaspiFanController). In this part, I will focus on the hardware part and bringing everything together.
+In the [last post]({{ site.baseurl }}/2020/04/24/Raspi-Fan-Controller_p1), I mainly described how to set up the software for the [Raspberry Pi Fan Controller](https://github.com/mu88/RaspiFanController). In this part, I will focus on the hardware part and bringing everything together.
 
 
 ## Bring it all together
@@ -57,15 +57,15 @@ Finally, I bought:
 
 Because I was afraid to somehow destroy the fan, I made a first test with my controller software and the LED:
 
-![]({{ site.url }}/public/post_assets/200424_Raspi_Fan_Controller/Image2.jpg)
+![]({{ site.baseurl }}/public/post_assets/200424_Raspi_Fan_Controller/Image2.jpg)
 
 After a successful test, I switched over and used the fan:
 
-![]({{ site.url }}/public/post_assets/200424_Raspi_Fan_Controller/Image3.jpg)
+![]({{ site.baseurl }}/public/post_assets/200424_Raspi_Fan_Controller/Image3.jpg)
 
 And it was working! So I had no more excuses to solder everything and do the final assembly:
 
-![]({{ site.url }}/public/post_assets/200424_Raspi_Fan_Controller/Image4.jpg)
+![]({{ site.baseurl }}/public/post_assets/200424_Raspi_Fan_Controller/Image4.jpg)
 
 
 ## Register the app as a service
