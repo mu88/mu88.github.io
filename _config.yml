@@ -3,7 +3,7 @@ title:               mu88
 tagline:             'Developer Blog'
 description:         'Just another blog of just another software developer out there. Thanks to <a href="https://twitter.com/mdo" target="_blank">@mdo</a> for providing the amazing Jekyll theme!'
 url:                 "https://mu88.github.io"
-paginate:            5
+paginate:            6
 
 # GitHub
 github:
