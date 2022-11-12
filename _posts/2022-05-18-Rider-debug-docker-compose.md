@@ -20,7 +20,7 @@ Make sure that the following options are configured within your `docker-compose`
 
 So it should look like this:
 
-[![Image]({{ site.baseurl }}/public/post_assets/220518_Rider_debug_docker_compose/Image1.png)]({{ site.baseurl }}/public/post_assets/220518_Rider_debug_docker_compose/Image1.png)
+[![Image]({{ site.baseurl }}/public/post_assets/2022-05-18-Rider-debug-docker-compose/Image1.png)]({{ site.baseurl }}/public/post_assets/2022-05-18-Rider-debug-docker-compose/Image1.png)
 
 Save the configuration, set some breakpoints and hit _Debug_!
 

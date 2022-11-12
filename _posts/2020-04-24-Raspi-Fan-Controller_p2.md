@@ -57,15 +57,15 @@ Finally, I bought:
 
 Because I was afraid to somehow destroy the fan, I made a first test with my controller software and the LED:
 
-![]({{ site.baseurl }}/public/post_assets/200424_Raspi_Fan_Controller/Image2.jpg)
+![]({{ site.baseurl }}/public/post_assets/2020-04-24-Raspi-Fan-Controller/Image2.jpg)
 
 After a successful test, I switched over and used the fan:
 
-![]({{ site.baseurl }}/public/post_assets/200424_Raspi_Fan_Controller/Image3.jpg)
+![]({{ site.baseurl }}/public/post_assets/2020-04-24-Raspi-Fan-Controller/Image3.jpg)
 
 And it was working! So I had no more excuses to solder everything and do the final assembly:
 
-![]({{ site.baseurl }}/public/post_assets/200424_Raspi_Fan_Controller/Image4.jpg)
+![]({{ site.baseurl }}/public/post_assets/2020-04-24-Raspi-Fan-Controller/Image4.jpg)
 
 
 ## Register the app as a service
