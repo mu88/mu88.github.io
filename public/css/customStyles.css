@@ -137,3 +137,9 @@ img.emoji {
   url('../fonts/pt-sans-v17-latin-700.ttf') format('truetype'), /* Safari, Android, iOS */
   url('../fonts/pt-sans-v17-latin-700.svg#PTSans') format('svg'); /* Legacy iOS */
 }
+
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
