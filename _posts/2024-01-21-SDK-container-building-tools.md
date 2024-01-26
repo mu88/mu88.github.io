@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Using .NET SDK Container Building Tools
-description: Throw away your boilerplate `Dockerfile`s and use the SDK tools 💪🏻
+description: Throw away your boilerplate Dockerfiles and use the SDK tools 💪🏻
 comment_issue_id: 23
 ---
 
