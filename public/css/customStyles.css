@@ -50,9 +50,13 @@ figure.highlight {
 }
 
 img.emoji {
-    display: inline;
-    margin: 0
-  }
+  display: inline;
+  margin: 0
+}
+
+.post {
+  text-align: justify;
+}
 
 /* pt-serif-regular - latin */
 @font-face {
