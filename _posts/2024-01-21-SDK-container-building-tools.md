@@ -112,7 +112,7 @@ dotnet publish --os linux --arch arm64 /t:PublishContainer -c Release -p:Contain
 dotnet publish --os linux --arch x64 /t:PublishContainer -c Release -p:ContainerRegistry=registry.hub.docker.com '-p:ContainerImageTags="1.0.0-x64;latest-x64"'
 {% endhighlight %}
 
-The property `ContainerFamily` is extremely handy to easily change the base image used to build and publish the app. For example, by adding `p:ContainerFamily=jammy-chiseled` one can easily build an image using the new chiseled base images ([see official Microsoft blog post for more information](https://devblogs.microsoft.com/dotnet/announcing-dotnet-chiseled-containers/)). We will look at this in a later blog post.
+The property `ContainerFamily` is extremely handy to easily change the base image used to build and publish the app. For example, by adding `p:ContainerFamily=jammy-chiseled` one can easily build an image using the new chiseled base images ([see official Microsoft blog post for more information](https://devblogs.microsoft.com/dotnet/announcing-dotnet-chiseled-containers/)). We will look at this [in the next post]({{ site.baseurl }}/2024/04/05/Raspi-Fan-Controller-chiseled.html).
 
 ## Closing
 Now that we saw the new tools in action, the big question is: _why should we use them, what's the problem using a dedicated `Dockerfile`?_ And this question is absolutely valid. I personally see the following benefits:
