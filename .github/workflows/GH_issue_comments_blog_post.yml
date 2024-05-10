@@ -1,0 +1,84 @@
+name: Create GH issue on new blog post for comments
+on: [push]
+
+jobs:
+  check_commit_and_issue:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+
+      - name: Get commit message
+        id: log
+        run: echo "SUBJECT=$(git log -1 --pretty=format:%s)" >> $GITHUB_ENV
+
+      - name: Create issue if needed
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+            const { execSync } = require('child_process');
+
+            const message = process.env.SUBJECT;
+            const regex = /^feat: add new blog post (.*)$/;
+            const match = message.match(regex);
+
+            if(!match) {
+                console.log("Commit message does not start with 'feat: add new blog post'");
+                return;
+            }
+
+            const commitHash = process.env.GITHUB_SHA;
+            const changedFiles = execSync(`git diff-tree --no-commit-id --name-only -r ${commitHash}`).toString().split('\n');
+
+            const blogPostFile = changedFiles.find(file => file.startsWith('_posts') && file.endsWith('.md'));
+
+            if (!blogPostFile) {
+              console.log("No markdown files in _posts directory were changed in this commit");
+              return;
+            }
+
+            const filePath = path.join(process.env.GITHUB_WORKSPACE, blogPostFile);
+            const data = fs.readFileSync(filePath, 'utf-8');
+
+            const issueIdRegex = /comment_issue_id: (\d+)/;
+            const issueIdMatch = data.match(issueIdRegex);
+
+            if (!issueIdMatch) {
+              console.log("Could not find 'comment_issue_id'");
+              return;
+            }
+
+            const issueIdInFile = issueIdMatch[1];
+            const title = "Comments on " + match[1];
+
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open'
+            });
+
+            let existingIssue = issues.find(i => i.title === title);
+
+            if (!existingIssue) {
+              existingIssue = (await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title
+              })).data;
+
+              console.log(`Issue "${title}" created`);
+            } else {
+              console.log(`Issue "${title}" already exists`);
+            }
+
+            const issueNumber = existingIssue.number;
+
+            if (issueNumber != issueIdInFile) {
+              console.log(`Mismatch! Issue ID from markdown file '${issueIdInFile}' does not match with issue id '${issueNumber}' from GitHub.`);
+              throw new Error(`Issue ID mismatch: ${issueIdInFile} (file) vs ${issueNumber} (GitHub)`);
+            }
+            console.log(`Issue id from file matches with the issue id in GitHub, both are '${issueNumber}'`);
