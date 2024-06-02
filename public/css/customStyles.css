@@ -147,3 +147,22 @@ img {
   margin-left: auto;
   margin-right: auto;
 }
+
+.clap-count {
+  display: none;
+  margin-left: 20px;
+
+  svg {
+    vertical-align: middle;
+    width: 17px;
+    height: 17px;
+  }
+}
+
+applause-button .count-container {
+  color: rgb(101, 129, 254) !important
+}
+
+.post-time {
+  margin-left: 20px;  
+}

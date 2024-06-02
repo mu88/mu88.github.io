@@ -20,6 +20,12 @@ author:
 # Custom vars
 version:             1.0.0
 
+defaults:
+  - scope:
+      type:             posts
+    values:
+      applause_button:  true # https://applause-button.com/
+
 plugins:
   - jekyll-paginate
   - jekyll-seo-tag
