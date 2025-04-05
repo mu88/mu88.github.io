@@ -1,0 +1,4 @@
+{
+  "name": "Jekyll",
+  "image": "registry.hub.docker.com/mu88/devcontainers-jekyll:latest"
+}
