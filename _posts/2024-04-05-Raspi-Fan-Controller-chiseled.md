@@ -33,7 +33,7 @@ Another neat benefit of chiseled images is that they are way smaller. That makes
 
 ## And why do you care?
 
-Well, that's a perfect question! One could definitely argue that in my private home network, the chance of a malicious attack might be negligibly. On the other hand, it's a nice apprentice piece to get used to the technology and better safe than sorry.
+Well, that's a perfect question! One could definitely argue that in my private home network, the chance of a malicious attack might be negligible. On the other hand, it's a nice apprentice piece to get used to the technology and better safe than sorry.
 
 ## Using chiseled images for the _Raspi Fan Controller_ project
 
