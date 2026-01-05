@@ -167,3 +167,20 @@ img {
     }
   }
 }
+
+/* Begin Make tables scrollable on small screens */
+table {
+  display: block;
+  overflow-x: auto;
+  border-collapse: collapse;
+  border: none;       /* Remove outer box */
+  white-space: nowrap;
+}
+
+@media (min-width: 56em) {
+  table {
+    width: 100%; /* Normal table on large screens */
+    min-width: unset;
+  }
+}
+/* End Make tables scrollable on small screens */
