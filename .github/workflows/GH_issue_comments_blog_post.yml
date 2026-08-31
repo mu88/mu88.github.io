@@ -12,7 +12,7 @@ jobs:
 
       - name: Get commit message
         id: log
-        run: echo "SUBJECT=$(git log -1 --pretty=format:%s)" >> $GITHUB_ENV
+        run: echo "SUBJECT=$(git log -1 --pretty=format:%s)" >> "$GITHUB_ENV"
 
       - name: Create issue if needed
         uses: actions/github-script@v9
