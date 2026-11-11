@@ -6,15 +6,14 @@ on:
   push:
     branches:
       - main
+      - feature/ai-security-staging-20261111
   workflow_dispatch:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
-  group: pages
+  group: ${{ github.ref == 'refs/heads/main' && 'pages' || format('pages-{0}', github.ref) }}
   cancel-in-progress: false
 
 jobs:
@@ -50,6 +49,11 @@ jobs:
           path: _site
 
   deploy:
+    if: github.ref == 'refs/heads/main'
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}slowUp.ics
