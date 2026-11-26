@@ -1,3 +1,6 @@
+#:property TargetFramework=net11.0
+#:property Features=runtime-async=on
+
 using System.Globalization;
 using System.Net;
 using System.Net.Http.Headers;
